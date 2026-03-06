@@ -1,6 +1,11 @@
+import { useRouter } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function Index() {
+  const router = useRouter();
+  const onPress = () => {
+    router.push({ pathname: "/customers/pages/home" });
+  };
   return (
     <View
       style={{
@@ -9,7 +14,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text onPress={onPress}>Edit app/index.tsx to edit this screen.</Text>
     </View>
   );
 }
