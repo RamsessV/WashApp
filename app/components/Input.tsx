@@ -1,30 +1,43 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, TextInput } from "react-native";
+import { Animated, TextInput, TextInputProps } from "react-native";
 import styled from "styled-components/native";
 
 const Container = styled.View`
-  width: 300px;
+  width: 100%;
   margin: 12px 0;
+  position: relative;
+  gap: 4px;
 `;
 
-const StyledInput = styled(TextInput)`
+const StyledInput = styled(TextInput)<{ hasError?: boolean }>`
   border-radius: 14px;
   background-color: #eee;
-  padding: 16px 14px;
+  padding: 22px 14px 10px 14px;
   font-size: 16px;
+  border-width: ${(props) => (props.hasError ? "2px" : "0px")};
+  border-color: ${(props) => (props.hasError ? "#ff4444" : "transparent")};
 `;
 
-const Label = styled(Animated.Text)`
+const Label = styled(Animated.Text)<{ hasError?: boolean }>`
   position: absolute;
   left: 14px;
-  color: #000;
+  top: 8px;
+  color: ${(props) => (props.hasError ? "#ff4444" : "#666")};
+  font-size: 12px;
+  z-index: 1;
 `;
 
-type Props = {
+const ErrorText = styled.Text`
+  color: #ff4444;
+  font-size: 11px;
+  margin-top: 2px;
+  margin-left: 4px;
+`;
+
+type Props = TextInputProps & {
   label: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  secureTextEntry?: boolean;
+  error?: boolean;
+  errorMessage?: string;
 };
 
 export default function Input({
@@ -32,6 +45,9 @@ export default function Input({
   value,
   onChangeText,
   secureTextEntry,
+  keyboardType,
+  error = false,
+  errorMessage = "",
 }: Props) {
   const [focused, setFocused] = useState(false);
   const animated = useRef(new Animated.Value(value ? 1 : 0)).current;
@@ -57,7 +73,9 @@ export default function Input({
 
   return (
     <Container>
-      <Label style={labelStyle}>{label}</Label>
+      <Label style={labelStyle} hasError={error}>
+        {label}
+      </Label>
 
       <StyledInput
         value={value}
@@ -65,7 +83,10 @@ export default function Input({
         onChangeText={onChangeText}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
+        keyboardType={keyboardType}
+        hasError={error}
       />
+      {error && errorMessage && <ErrorText>{errorMessage}</ErrorText>}
     </Container>
   );
 }

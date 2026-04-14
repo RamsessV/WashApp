@@ -1,20 +1,40 @@
-import { useRouter } from "expo-router";
-import { Text, View } from "react-native";
+import { useEffect } from "react"
+import { View, Image, StyleSheet } from "react-native"
+import { router } from "expo-router"
+import { getSession, signOut } from "@/services/authService"
 
 export default function Index() {
-  const router = useRouter();
-  const onPress = () => {
-    router.push({ pathname: "/customers/pages/home" });
-  };
+
+  useEffect(() => {
+    checkSession()
+  }, [])
+
+  async function checkSession() {
+    const session = await getSession()
+    await signOut();
+    setTimeout(() => {router.push(session ? "/pages/home" : "/pages/signup")}, 2000)
+  }
+  
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text onPress={onPress}>Edit app/index.tsx to edit this screen.</Text>
+    <View style={styles.container}>
+      <Image
+        source={require('@/assets/images/logo.jpg')}
+        style={styles.logo}
+        resizeMode="contain"
+      />
     </View>
-  );
+  )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff"
+  },
+  logo: {
+    width: 250, 
+    height: 250, 
+  }
+})
