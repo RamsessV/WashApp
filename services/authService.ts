@@ -6,9 +6,9 @@ export async function signUp(name: string, email: string, password: string) {
     password,
     options: {
       data: {
-        name
-      }
-    }
+        name,
+      },
+    },
   });
   return res;
 }
@@ -16,7 +16,7 @@ export async function signUp(name: string, email: string, password: string) {
 export async function signIn(email: string, password: string) {
   const res = await supabase.auth.signInWithPassword({
     email,
-    password
+    password,
   });
   return res;
 }
@@ -24,7 +24,7 @@ export async function signIn(email: string, password: string) {
 export async function signOut() {
   const res = await supabase.auth.signOut();
   return res;
-}   
+}
 
 export async function getSession() {
   const { data } = await supabase.auth.getSession();

@@ -17,6 +17,7 @@ export default function SignUp() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -98,7 +99,7 @@ export default function SignUp() {
             <Input label="Nombre" value={name} onChangeText={setName} />
 
             <Input label="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
-
+            
             <Input
               label="Contraseña"
               value={password}
