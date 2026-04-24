@@ -1,23 +1,20 @@
 import { signUp } from "@/services/authService";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  TouchableOpacity,
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
 } from "react-native";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 import { Container, Content, HeaderImage, Title } from "../../theme/layout";
-import Button from "../components/Button";
-import Input from "../components/Input";
 
 export default function SignUp() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -72,7 +69,7 @@ export default function SignUp() {
       return;
     }
 
-    router.push("/pages/home");
+    router.push("/");
   };
 
   return (
@@ -98,8 +95,13 @@ export default function SignUp() {
 
             <Input label="Nombre" value={name} onChangeText={setName} />
 
-            <Input label="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
-            
+            <Input
+              label="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+
             <Input
               label="Contraseña"
               value={password}
@@ -114,14 +116,17 @@ export default function SignUp() {
               secureTextEntry
             />
             <Button title="Registrate" onPress={handleSignUp} />
-            <TouchableOpacity
-              onPress={() => router.push("/pages/login")}
-              style={{ marginTop: 12, alignItems: "center" }}
+            <Link
+              href="/login"
+              style={{
+                marginTop: 12,
+                alignSelf: "center",
+                color: "#1E40AF",
+                fontWeight: "600",
+              }}
             >
-              <Text style={{ color: "#1E40AF", fontWeight: "600" }}>
-                ya tienes cuenta?
-              </Text>
-            </TouchableOpacity>
+              ya tienes cuenta?
+            </Link>
           </Content>
         </Container>
       </ScrollView>

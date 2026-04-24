@@ -1,17 +1,15 @@
 import { signIn } from "@/services/authService";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Text,
-  TouchableOpacity,
 } from "react-native";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 import { Container, Content, HeaderImage, Title } from "../../theme/layout";
-import Button from "../components/Button";
-import Input from "../components/Input";
 
 export default function Login() {
   const router = useRouter();
@@ -54,7 +52,7 @@ export default function Login() {
       return;
     }
 
-    router.push("/pages/home");
+    router.push("/");
   };
 
   return (
@@ -94,14 +92,17 @@ export default function Login() {
             />
 
             <Button title="Login" onPress={handleLogin} />
-            <TouchableOpacity
-              onPress={() => router.push("/pages/signup")}
-              style={{ marginTop: 12, alignItems: "center" }}
+            <Link
+              href="/signup"
+              style={{
+                marginTop: 12,
+                alignSelf: "center",
+                color: "#1E40AF",
+                fontWeight: "600",
+              }}
             >
-              <Text style={{ color: "#1E40AF", fontWeight: "600" }}>
-                no tienes cuenta?
-              </Text>
-            </TouchableOpacity>
+              no tienes cuenta?
+            </Link>
           </Content>
         </Container>
       </ScrollView>

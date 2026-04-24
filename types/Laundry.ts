@@ -3,6 +3,8 @@ export interface Laundry {
     name: string;
     address: string;
     phone: string;
-    rating: number
+    rating: number;
+    owner: string;
+    created_at: string;
 }
 

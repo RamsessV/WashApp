@@ -1,40 +1,26 @@
-import { getSession } from "@/services/authService";
-import { router } from "expo-router";
-import { useEffect } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { getSession, isLaundry } from "@/services/authService";
+import { Redirect } from "expo-router";
+import { useEffect, useState } from "react";
 
 export default function Index() {
+  const [target, setTarget] = useState<string | null>(null);
+
   useEffect(() => {
-    checkSession();
+    (async () => {
+      const session = await getSession();
+      if (session) {
+        const laundry = await isLaundry();
+        setTarget(laundry ? "/dashboard" : "/home");
+      } else {
+        setTarget("/login");
+      }
+    })();
   }, []);
 
-  async function checkSession() {
-    const session = await getSession();
-    setTimeout(() => {
-      router.push(session ? "/pages/home" : "/pages/signup");
-    }, 2000);
+  if (!target) {
+    return null;
   }
 
-  return (
-    <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/logo.jpg")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-    </View>
-  );
+  
+  return <Redirect href={target as "/home" | "/login" | "/dashboard"} />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  logo: {
-    width: 250,
-    height: 250,
-  },
-});

@@ -5,8 +5,8 @@ import { Laundry } from "@/types/Laundry";
 import { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
-import LaundryCard from "../components/LaundryCard";
-import Spinner from "../components/Spinner";
+import LaundryCard from "../../components/LaundryCard";
+import Spinner from "../../components/Spinner";
 
 function EmptyState() {
   return (

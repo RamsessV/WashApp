@@ -30,3 +30,30 @@ export async function getSession() {
   const { data } = await supabase.auth.getSession();
   return data.session;
 }
+
+export async function getUserId() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user?.id;
+}
+
+export async function isLaundry() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data, error } = await supabase
+    .from("laundrys")
+    .select("id")
+    .eq("owner", user?.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error checking laundry status:", error);
+    return false; 
+  }
+
+  return !!data;
+
+}
