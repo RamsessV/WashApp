@@ -52,3 +52,16 @@ export async function updateLaundry(
 
   return (data as Laundry | null) ?? null;
 }
+
+
+export async function getLaundryById(id: number) {
+  const {data, error} = await supabase.from('laundrys').select().eq("id", id).maybeSingle();
+
+  if(error) {
+    console.log("ups");
+    return null
+  }
+
+  return (data as Laundry | null) ?? null;
+  
+}

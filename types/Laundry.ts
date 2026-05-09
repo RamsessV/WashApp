@@ -6,5 +6,6 @@ export interface Laundry {
     rating: number;
     owner: string;
     created_at: string;
+    delivery_cost: number;
 }
 

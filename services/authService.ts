@@ -57,3 +57,11 @@ export async function isLaundry() {
   return !!data;
 
 }
+
+
+export async function updateUser(name: string, password: string) {
+    supabase.auth.updateUser({
+        password,
+        data: { name },
+    }); 
+}

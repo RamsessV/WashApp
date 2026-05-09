@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import styled from "styled-components/native";
 
 interface LaundryCardProps {
@@ -6,9 +6,10 @@ interface LaundryCardProps {
   location: string;
   phone: string;
   rating: number;
+  onClick?: () => void;
 }
 
-const Card = styled.View`
+const Card = styled.Pressable`
   background-color: #ffffff;
   border-radius: 20px;
   padding: 16px;
@@ -100,9 +101,10 @@ export default function LaundryCard({
   location,
   phone,
   rating,
+  onClick
 }: LaundryCardProps) {
   return (
-    <Card>
+    <Card onPress={onClick}>
       <AccentBar />
 
       <Header>

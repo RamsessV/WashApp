@@ -1,4 +1,4 @@
-import { getSession } from "@/services/authService";
+import { getSession, signOut } from "@/services/authService";
 import { getLaundrys } from "@/services/LaundryService";
 import { Container, Content, Title } from "@/theme/layout";
 import { Laundry } from "@/types/Laundry";
@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import LaundryCard from "../../components/LaundryCard";
 import Spinner from "../../components/Spinner";
+import { useRouter } from "expo-router";
 
 function EmptyState() {
   return (
@@ -22,11 +23,13 @@ export default function Home() {
   const [session, setSession] = useState<Session | null>(null);
   const [laundrys, setLaundrys] = useState<Laundry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const displayName =
     session?.user.user_metadata?.name ??
     session?.user.email?.split("@")[0] ??
     "usuario";
+
 
   useEffect(() => {
     async function loadData() {
@@ -67,7 +70,7 @@ export default function Home() {
             <Title>Hola {displayName}</Title>
 
             <Text style={{ fontSize: 16, color: "#6b6b6b", marginBottom: 16 }}>
-              Laundrys disponibles
+              Realiza una orden
             </Text>
           </Content>
         }
@@ -78,6 +81,7 @@ export default function Home() {
               location={item.address}
               phone={item.phone}
               rating={item.rating}
+              onClick={() => router.push({pathname: '/orders/laundry_page', params: { laundryId: item.id } })}
             />
           </Content>
         )}
